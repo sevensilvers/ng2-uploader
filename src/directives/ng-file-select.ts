@@ -4,7 +4,8 @@ import {
   EventEmitter,
   Input,
   Output,
-  HostListener
+  HostListener,
+  SimpleChange
 } from '@angular/core';
 import { Ng2Uploader } from '../services/ng2-uploader';
 
@@ -12,11 +13,11 @@ import { Ng2Uploader } from '../services/ng2-uploader';
   selector: '[ngFileSelect]'
 })
 export class NgFileSelectDirective {
-  
+
   @Input() events: EventEmitter<any>;
   @Output() onUpload: EventEmitter<any> = new EventEmitter();
   @Output() onPreviewData: EventEmitter<any> = new EventEmitter();
-  
+
   _options:any;
 
   get options(): any {
@@ -61,6 +62,10 @@ export class NgFileSelectDirective {
         });
       }
     });
+  }
+
+  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    console.log(changes)
   }
 
   filterFilesByExtension(): void {
