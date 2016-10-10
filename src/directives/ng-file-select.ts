@@ -18,7 +18,7 @@ export class NgFileSelectDirective {
   @Output() onUpload: EventEmitter<any> = new EventEmitter();
   @Output() onPreviewData: EventEmitter<any> = new EventEmitter();
 
-  _options:any;
+  _options: any;
 
   get options(): any {
     return this._options;
@@ -57,15 +57,12 @@ export class NgFileSelectDirective {
       if (this.events) {
         this.events.subscribe((data: string) => {
           if (data === 'startUpload') {
+            this.uploader.setOptions(this.options);
             this.uploader.uploadFilesInQueue();
           }
         });
       }
     });
-  }
-
-  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    console.log(changes)
   }
 
   filterFilesByExtension(): void {
@@ -75,7 +72,7 @@ export class NgFileSelectDirective {
       }
 
       let ext: string = f.name.split('.').pop();
-      if (this.options.allowedExtensions.indexOf(ext) !== -1 ) {
+      if (this.options.allowedExtensions.indexOf(ext) !== -1) {
         return true;
       }
 
@@ -90,6 +87,7 @@ export class NgFileSelectDirective {
     }
 
     if (this.files.length) {
+      this.uploader.setOptions(this.options);
       this.uploader.addFilesToQueue(this.files);
     }
   }
