@@ -57,6 +57,9 @@ export class NgFileSelectDirective {
       if (this.events) {
         this.events.subscribe((data: string) => {
           if (data === 'startUpload') {
+            if (this.options.url.replace('images%2F', '').slice(-1) === '=') {
+              this.options.url = `${this.fileManager.getFmUrl()}/api/image_upload`
+            }
             this.uploader.setOptions(this.options);
             this.uploader.uploadFilesInQueue();
           }
